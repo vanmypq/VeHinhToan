@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17365d">
+<meta name="description" content="GeoTHCS – Phòng vẽ hình học Toán THCS lớp 6–9, hỗ trợ hình học 2D và 3D.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>GeoTHCS – Phòng vẽ hình học</title>
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<style>
+:root{--navy:#17365d;--blue:#2463eb;--gold:#d6a84f;--bg:#f3f6fb;--ink:#172338;--muted:#65758b;--line:#dfe6ef;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.topbar{background:linear-gradient(115deg,#122845,#1f4c7d);color:#fff;padding:15px clamp(14px,3vw,32px);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;box-shadow:0 4px 18px #10274724}
+.brand{display:flex;align-items:center;gap:12px}.logo{height:44px;width:44px;border-radius:13px;background:#ffffff18;border:1px solid #ffffff38;display:grid;place-items:center;font-size:24px}.brand h1{font-size:20px;margin:0;letter-spacing:.2px}.brand p{margin:3px 0 0;color:#d7e4f5;font-size:12px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);padding:9px 12px;font-weight:650;font-size:13px;transition:.15s}.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px #162b4714}.btn.primary{background:var(--blue);border-color:var(--blue);color:white}.btn.dark{background:#ffffff14;border-color:#ffffff40;color:#fff}.btn.gold{background:var(--gold);border-color:var(--gold);color:#1e2b3c}
+.page{width:100%;max-width:none;margin:0 auto;padding:12px clamp(10px,1.3vw,20px) 18px}.intro{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.intro h2{font-size:clamp(19px,2vw,25px)}.intro p{font-size:13px}.eyebrow{font-size:11px;font-weight:800;color:#2d63a0;letter-spacing:1.3px;text-transform:uppercase}.intro h2{margin:5px 0 4px;font-size:clamp(22px,3vw,30px);letter-spacing:-.7px}.intro p{margin:0;color:var(--muted);font-size:14px;max-width:720px;line-height:1.5}
+.status{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);padding:9px 12px;border-radius:999px}.dot{width:8px;height:8px;border-radius:50%;background:#e3a33b}.dot.ready{background:#22a06b}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:12px;align-items:stretch}.layout.library-hidden{grid-template-columns:minmax(0,1fr)}.layout.library-hidden>aside{display:none}.panel,.workpanel{background:var(--white);border:1px solid var(--line);border-radius:12px;box-shadow:0 5px 18px #1a34500a;overflow:hidden}.workpanel{min-width:0}.panel-head{padding:15px 16px 12px;border-bottom:1px solid var(--line)}.panel-head h3{font-size:15px;margin:0}.panel-head p{font-size:12px;color:var(--muted);margin:5px 0 0;line-height:1.4}.panel-body{padding:14px;display:grid;gap:15px}.field{display:grid;gap:7px}.field label,.label{font-size:12px;font-weight:750;color:#394b62}.field select,.field input,.field textarea{width:100%;border:1px solid #d7e0eb;border-radius:9px;background:#fff;padding:10px 11px;outline:none;color:var(--ink)}.field select:focus,.field input:focus,.field textarea:focus{border-color:#6a9bf5;box-shadow:0 0 0 3px #2463eb16}.field textarea{resize:vertical;min-height:82px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;line-height:1.5}.help{font-size:11px;color:var(--muted);line-height:1.45}.tabs{display:grid;grid-template-columns:1fr 1fr;background:#edf2f8;padding:4px;border-radius:11px;gap:4px}.tabs button{border:0;background:transparent;padding:9px 6px;border-radius:8px;color:#5a6b81;font-size:12px;font-weight:750}.tabs button.active{background:white;color:#1e5fc4;box-shadow:0 1px 5px #17365d18}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.quick{border:1px solid #e1e8f1;background:#fbfcfe;border-radius:10px;padding:10px 9px;text-align:left;min-height:58px}.quick:hover{border-color:#92b5f8;background:#f5f8ff}.quick strong{display:block;font-size:12px;color:#243b59}.quick span{display:block;font-size:10px;color:#7b8ba0;margin-top:4px}
+.work-head{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#fbfdff}.work-modebar{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.mode-switch{display:flex;gap:3px;padding:3px;border-radius:10px;background:#eaf0f8}.mode-switch .btn{border:0;background:transparent;padding:8px 11px}.mode-switch .btn.active{background:#1e5fc4;color:#fff;box-shadow:0 2px 5px #17365d24}.quick-picker{display:flex;align-items:center;gap:6px}.quick-picker select{max-width:230px;min-width:170px;border:1px solid #d7e0eb;border-radius:9px;background:#fff;padding:8px 10px;color:var(--ink);font-size:12px;font-weight:650}.workpanel:fullscreen .work-head{padding:8px 12px}.workpanel:fullscreen .work-title{display:none}.workpanel:fullscreen .work-modebar{flex:1}.workpanel:fullscreen .toolbar{margin-left:auto}.workpanel:fullscreen .quick-picker select{max-width:260px}.work-title{display:flex;align-items:center;gap:9px}.work-title h3{font-size:14px;margin:0}.work-title span{font-size:11px;color:var(--muted)}.toolbar{display:flex;gap:6px;flex-wrap:wrap}.toolbar .btn{padding:8px 10px;font-size:12px}
+#ggb-wrap{height:calc(100vh - 245px);min-height:560px;max-height:none;background:white;position:relative}#ggb-element{width:100%;height:100%}.layout.library-hidden #ggb-wrap{height:calc(100vh - 180px);min-height:620px}.workpanel:fullscreen{width:100vw;height:100vh;border:0;border-radius:0;background:#fff;display:flex;flex-direction:column}.workpanel:fullscreen .work-head{flex:0 0 auto}.workpanel:fullscreen #ggb-wrap{height:calc(100vh - 95px);min-height:0;flex:1}.workpanel:fullscreen .work-foot{display:none}#ggb-element{width:100%;height:100%}#loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:linear-gradient(135deg,#f9fbff,#eef4fc);z-index:2;text-align:center;padding:20px;color:#536780}#loading.hidden{display:none}.spinner{width:28px;height:28px;border:3px solid #d6e3f4;border-top-color:#2463eb;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.work-foot{padding:10px 14px;background:#fafcff;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:11px}.notice{padding:10px 12px;border-radius:9px;background:#eef6ff;border:1px solid #d9eaff;color:#28558b;font-size:12px;line-height:1.45;display:none}.notice.show{display:block}.notice.error{background:#fff4ed;border-color:#ffddc8;color:#934516}
+.footer{margin-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#78879a;font-size:11px;line-height:1.5}.footer a{color:#2b63b7}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.layout.library-hidden{grid-template-columns:1fr}.panel-body{grid-template-columns:1fr 1fr;align-items:start}.panel-body .full{grid-column:1/-1}#ggb-wrap,.layout.library-hidden #ggb-wrap{height:68vh;min-height:480px}}
+@media(max-width:560px){.work-modebar{width:100%}.quick-picker{flex:1;min-width:0}.quick-picker select{min-width:0;width:100%;max-width:none}.workpanel:fullscreen .work-head{gap:6px}.workpanel:fullscreen .toolbar{width:auto;margin-left:0}.workpanel:fullscreen .toolbar .btn{flex:0 1 auto;padding:7px 8px}.topbar{padding:10px}.brand h1{font-size:18px}.top-actions{width:100%}.top-actions .btn{flex:1}.page{padding:9px 6px 16px}.panel-body{grid-template-columns:1fr}.panel-body .full{grid-column:auto}.intro{align-items:flex-start}.intro p{font-size:12px}.status{font-size:11px}#ggb-wrap,.layout.library-hidden #ggb-wrap{height:68vh;min-height:430px}.toolbar{width:100%}.toolbar .btn{flex:1}.work-head{align-items:flex-start;padding:9px}.work-foot{font-size:10px}.layout{gap:8px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="logo">△</div><div><h1>GeoTHCS</h1><p>Phòng vẽ hình học dành cho giáo viên THCS</p></div></div>
+  <div class="top-actions">
+    <button class="btn dark" id="installBtn" hidden>＋ Cài đặt ứng dụng</button>
+    <button class="btn dark" id="newBtn">＋ Bản vẽ mới</button>
+    <button class="btn gold" id="saveBtn">↓ Lưu tệp GeoGebra</button>
+  </div>
+</header>
+<main class="page">
+  <section class="intro">
+    <div><div class="eyebrow">Công cụ dạy học Toán 6–9</div><h2>Biến ý tưởng hình học thành hình vẽ</h2><p>Tạo hình phẳng và hình không gian có thể kéo, xoay, đo đạc và khám phá. Dùng thư viện mẫu để bắt đầu nhanh hoặc nhập lệnh GeoGebra của riêng bạn.</p></div>
+    <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">Đang kết nối bộ dựng hình…</span></div>
+  </section>
+  <div class="layout">
+    <aside class="panel">
+      <div class="panel-head"><h3>Thư viện hình học</h3><p>Chọn lớp, không gian và hình mẫu để tạo nhanh.</p></div>
+      <div class="panel-body">
+        <div class="field"><label for="grade">Chương trình</label><select id="grade"><option value="6">Toán 6 · Điểm, đoạn thẳng, góc, đa giác</option><option value="7">Toán 7 · Góc, tam giác, quan hệ song song</option><option value="8" selected>Toán 8 · Tứ giác, định lý, lăng trụ</option><option value="9">Toán 9 · Đường tròn, hệ thức, hình khối</option></select></div>
+        <div class="field full"><label>Chế độ dựng hình</label><div class="tabs"><button id="mode2d" class="active">Hình phẳng 2D</button><button id="mode3d">Không gian 3D</button></div></div>
+        <div class="field full"><label for="category">Nhóm hình</label><select id="category"></select></div>
+        <div class="field full"><label>Hình mẫu</label><div class="quick-grid" id="quickGrid"></div></div>
+        <div class="field full"><label for="command">Lệnh dựng hình</label><textarea id="command" spellcheck="false" placeholder="Ví dụ: A=(0,0)&#10;B=(4,0)&#10;C=(2,3)&#10;Polygon(A,B,C)"></textarea><div class="help">Nhập một lệnh mỗi dòng. Tên lệnh dựng hình dùng cú pháp GeoGebra tiếng Anh; có thể dùng dấu phẩy thập phân theo thiết lập GeoGebra.</div><button class="btn primary" id="runCommand">▶ Dựng hình từ lệnh</button></div>
+        <div class="field full"><label>Thao tác nhanh</label><div class="quick-grid">
+          <button class="quick" id="undoBtn"><strong>↶ Hoàn tác</strong><span>Quay lại thao tác trước</span></button>
+          <button class="quick" id="redoBtn"><strong>↷ Làm lại</strong><span>Khôi phục thao tác</span></button>
+          <button class="quick" id="gridBtn"><strong>▦ Lưới tọa độ</strong><span>Bật hoặc tắt lưới</span></button>
+          <button class="quick" id="labelsBtn"><strong>Ab Nhãn đối tượng</strong><span>Hiện hoặc ẩn tên điểm</span></button>
+        </div></div>
+        <div class="notice full" id="notice" role="status"></div>
+      </div>
+    </aside>
+    <section class="workpanel">
+      <div class="work-head">
+        <div class="work-title"><div><h3 id="workspaceTitle">Bàn dựng hình 2D</h3><span id="workspaceSubtitle">Kéo các điểm để thay đổi hình</span></div></div>
+        <div class="work-modebar">
+          <div class="mode-switch" aria-label="Chọn không gian dựng hình">
+            <button class="btn active" id="workMode2d" type="button">2D · Hình phẳng</button>
+            <button class="btn" id="workMode3d" type="button">3D · Hình khối</button>
+          </div>
+          <div class="quick-picker">
+            <select id="quickToolSelect" aria-label="Chọn hình cần dựng">
+              <option value="point">Điểm</option><option value="segment">Đoạn thẳng</option><option value="line">Đường thẳng</option>
+              <option value="ray">Tia</option><option value="triangle">Tam giác bất kỳ</option><option value="isosceles">Tam giác cân</option>
+              <option value="equilateral">Tam giác đều</option><option value="righttriangle">Tam giác vuông</option>
+              <option value="square">Hình vuông</option><option value="rectangle">Hình chữ nhật</option><option value="circle">Đường tròn</option><option value="pentagon">Ngũ giác đều</option><option value="hexagon">Lục giác đều</option>
+              <option value="cube" hidden>Hình lập phương</option><option value="box" hidden>Hình hộp chữ nhật</option><option value="prism" hidden>Lăng trụ tam giác</option><option value="pyramid" hidden>Hình chóp tứ giác</option><option value="tetrahedron" hidden>Tứ diện</option>
+              <option value="cylinder" hidden>Hình trụ</option><option value="cone" hidden>Hình nón</option><option value="sphere" hidden>Hình cầu</option>
+            </select>
+            <button class="btn primary" id="createQuickTool" type="button">＋ Dựng hình</button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button class="btn" id="toggleLibraryBtn" aria-expanded="true">◂ Thư viện</button>
+          <button class="btn" id="pngBtn">Xuất PNG</button>
+          <button class="btn" id="svgBtn">Xuất SVG</button>
+          <button class="btn" id="fullscreenBtn">⛶ Toàn màn hình</button>
+        </div>
+      </div>
+      <div id="ggb-wrap"><div id="ggb-element"></div><div id="loading"><div class="spinner"></div><strong>Đang tải GeoGebra…</strong><span style="font-size:12px">Lần đầu có thể mất một chút thời gian.</span></div></div>
+      <div class="work-foot"><span>✦ Hình dựng được xử lý bởi GeoGebra</span><span id="exportHint">PNG và SVG khả dụng ở chế độ 2D; chế độ 3D hỗ trợ xuất PNG.</span></div>
+    </section>
+  </div>
+  <div class="footer"><span>GeoTHCS là giao diện hỗ trợ dạy học, tích hợp bộ dựng hình GeoGebra trực tuyến.</span><span>Cần kết nối Internet · <a href="https://www.geogebra.org/terms" target="_blank" rel="noopener">Điều khoản GeoGebra</a> · <a href="https://geogebra.github.io/docs/reference/en/GeoGebra_Apps_API/" target="_blank" rel="noopener">Tài liệu API</a></span></div>
+</main>
+<script>
+(() => {
+  "use strict";
+  let api = null, currentMode = "2d", loaded = false, gridVisible = true, labelsVisible = true, appletGeneration = 0;
+  const $ = id => document.getElementById(id);
+  const commands = {
+    "Điểm và đường": [
+      ["Điểm và nhãn","A=(0,0)"],
+      ["Đoạn thẳng AB","A=(-3,0)\nB=(3,1)\nSegment(A,B)"],
+      ["Đường thẳng AB","A=(-3,-1)\nB=(3,2)\nLine(A,B)"],
+      ["Tia AB","A=(-3,0)\nB=(3,1)\nRay(A,B)"],
+      ["Trung điểm","A=(-3,0)\nB=(3,0)\nSegment(A,B)\nM=Midpoint(A,B)"],
+      ["Hai đường vuông góc","A=(-3,0)\nB=(3,0)\nC=(0,-2)\nr=Line(A,B)\nPerpendicularLine(C,r)"],
+      ["Hai đường song song","A=(-3,0)\nB=(3,0)\nC=(-3,2)\nD=(3,2)\nLine(A,B)\nLine(C,D)"],
+      ["Đường trung trực","A=(-2,0)\nB=(2,0)\nSegment(A,B)\nPerpendicularBisector(A,B)"]
+    ],
+    "Tam giác": [
+      ["Tam giác bất kỳ","A=(0,0)\nB=(5,0)\nC=(2,3)\nPolygon(A,B,C)"],
+      ["Tam giác cân","A=(-3,0)\nB=(3,0)\nC=(0,4)\nPolygon(A,B,C)"],
+      ["Tam giác đều","A=(0,0)\nB=(4,0)\nC=Rotate(B,60°,A)\nPolygon(A,B,C)"],
+      ["Tam giác vuông","A=(0,0)\nB=(4,0)\nC=(0,3)\nPolygon(A,B,C)"],
+      ["Trọng tâm tam giác","A=(0,0)\nB=(5,0)\nC=(2,4)\nPolygon(A,B,C)\nG=Centroid(A,B,C)"],
+      ["Đường cao tam giác","A=(0,0)\nB=(5,0)\nC=(2,4)\nPolygon(A,B,C)\nAltitude(C,A,B)"],
+      ["Đường tròn ngoại tiếp","A=(0,0)\nB=(5,0)\nC=(2,4)\nPolygon(A,B,C)\nCircle(A,B,C)"]
+    ],
+    "Tứ giác": [
+      ["Hình vuông","A=(-2,-2)\nB=(2,-2)\nC=(2,2)\nD=(-2,2)\nPolygon(A,B,C,D)"],
+      ["Hình chữ nhật","A=(-3,-1.5)\nB=(3,-1.5)\nC=(3,1.5)\nD=(-3,1.5)\nPolygon(A,B,C,D)"],
+      ["Hình bình hành","A=(0,0)\nB=(5,0)\nD=(2,3)\nC=B+D-A\nPolygon(A,B,C,D)"],
+      ["Hình thoi","A=(-3,0)\nB=(0,2)\nC=(3,0)\nD=(0,-2)\nPolygon(A,B,C,D)"],
+      ["Hình thang","A=(-3,0)\nB=(3,0)\nC=(2,2)\nD=(-1,2)\nPolygon(A,B,C,D)"],
+      ["Hình diều","A=(0,3)\nB=(2,0)\nC=(0,-2)\nD=(-2,0)\nPolygon(A,B,C,D)"],
+      ["Ngũ giác đều","A=(0,2)\nB=(1.902,0.618)\nC=(1.176,-1.618)\nD=(-1.176,-1.618)\nE=(-1.902,0.618)\nPolygon(A,B,C,D,E)"],
+      ["Lục giác đều","A=(0,2)\nB=(1.732,1)\nC=(1.732,-1)\nD=(0,-2)\nE=(-1.732,-1)\nF=(-1.732,1)\nPolygon(A,B,C,D,E,F)"]
+    ],
+    "Đường tròn và cung": [
+      ["Đường tròn tâm O","O=(0,0)\nA=(3,0)\nCircle(O,A)"],
+      ["Đường tròn qua ba điểm","A=(-2,0)\nB=(2,0)\nC=(0,3)\nCircle(A,B,C)"],
+      ["Nửa đường tròn","A=(-3,0)\nB=(3,0)\nSemicircle(A,B)"],
+      ["Tiếp tuyến đường tròn","O=(0,0)\nA=(2,0)\nc=Circle(O,A)\nTangent(A,c)"],
+      ["Hai đường tròn đồng tâm","O=(0,0)\nA=(2,0)\nB=(3,0)\nCircle(O,A)\nCircle(O,B)"],
+      ["Đa giác nội tiếp đường tròn","O=(0,0)\nA=(2,0)\nc=Circle(O,A)\nB=(0,2)\nC=(-2,0)\nD=(0,-2)\nPolygon(A,B,C,D)"]
+    ],
+    "Góc và phép dựng": [
+      ["Góc ABC","A=(0,0)\nB=(3,0)\nC=(4,2)\nAngle(A,B,C)"],
+      ["Phân giác góc","A=(-2,0)\nB=(0,0)\nC=(1,2)\nAngleBisector(A,B,C)"],
+      ["Giao điểm hai đường","A=(-3,-1)\nB=(3,2)\nC=(-3,2)\nD=(3,-1)\nr=Line(A,B)\ns=Line(C,D)\nIntersect(r,s)"],
+      ["Đường vuông góc","A=(-3,0)\nB=(3,0)\nC=(0,2)\nr=Line(A,B)\nPerpendicularLine(C,r)"],
+      ["Đường song song","A=(-3,0)\nB=(3,0)\nC=(0,2)\nr=Line(A,B)\nParallelLine(C,r)"]
+    ],
+    "Hình khối 3D": [
+      ["Hình lập phương (đã sửa)","A=(0,0,0)\nB=(3,0,0)\nCube(A,B)"],
+      ["Hình hộp chữ nhật","A=(0,0,0)\nB=(4,0,0)\nC=(4,2,0)\nD=(0,2,0)\nE=(0,0,3)\nPrism(Polygon(A,B,C,D),E)"],
+      ["Lăng trụ tam giác","A=(0,0,0)\nB=(3,0,0)\nC=(1,2,0)\nD=(0,0,3)\nPrism(Polygon(A,B,C),D)"],
+      ["Lăng trụ ngũ giác","A=(0,2,0)\nB=(1.9,0.6,0)\nC=(1.2,-1.6,0)\nD=(-1.2,-1.6,0)\nE=(-1.9,0.6,0)\nF=(0,2,3)\nPrism(Polygon(A,B,C,D,E),F)"],
+      ["Hình chóp tứ giác","A=(-2,-2,0)\nB=(2,-2,0)\nC=(2,2,0)\nD=(-2,2,0)\nS=(0,0,4)\nPyramid(Polygon(A,B,C,D),S)"],
+      ["Hình chóp tam giác","A=(0,0,0)\nB=(3,0,0)\nC=(1,2,0)\nS=(1,1,3)\nPyramid(Polygon(A,B,C),S)"],
+      ["Tứ diện","A=(0,0,0)\nB=(3,0,0)\nC=(1,2,0)\nD=(1,1,3)\nPyramid(Polygon(A,B,C),D)"],
+      ["Hình trụ","Cylinder((0,0,0),(0,0,4),2)"],
+      ["Hình nón","Cone((0,0,0),(0,0,4),2)"],
+      ["Hình cầu","Sphere((0,0,0),2)"],
+      ["Mặt phẳng qua ba điểm","A=(0,0,0)\nB=(3,0,0)\nC=(0,3,0)\nPlane(A,B,C)"],
+      ["Mặt phẳng cắt khối trụ","c=Cylinder((0,0,0),(0,0,4),2)\nA=(-3,0,2)\nB=(3,0,2)\nC=(0,3,2)\nPlane(A,B,C)"]
+    ]
+  };
+  const twoDCategories = ["Điểm và đường","Tam giác","Tứ giác","Đường tròn và cung","Góc và phép dựng"];
+  const threeDCategories = ["Hình khối 3D"];
+  function showNotice(message, error=false) {
+    const n=$("notice"); n.textContent=message; n.className="notice show"+(error?" error":"");
+    window.clearTimeout(showNotice.timer); showNotice.timer=window.setTimeout(()=>n.className="notice",5500);
+  }
+  function setReady(ok, text) { $("statusDot").classList.toggle("ready",ok); $("statusText").textContent=text; }
+  function currentCategories(){ return currentMode==="2d"?twoDCategories:threeDCategories; }
+  function renderCategories(){
+    const sel=$("category"); sel.innerHTML="";
+    currentCategories().forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;sel.appendChild(o);});
+    renderQuick();
+  }
+  function renderQuick(){
+    const list=commands[$("category").value]||[];
+    const grid=$("quickGrid"); grid.innerHTML="";
+    list.forEach(([name,cmd])=>{
+      const b=document.createElement("button");b.className="quick";
+      const strong=document.createElement("strong");strong.textContent=name;
+      const span=document.createElement("span");span.textContent="Tạo hình mẫu";
+      b.append(strong,span);b.addEventListener("click",()=>runCommands(cmd,true));grid.appendChild(b);
+    });
+  }
+  function runCommands(cmd, clearFirst=false){
+    if(!api || !loaded){showNotice("Bộ dựng hình chưa sẵn sàng. Hãy chờ trạng thái GeoGebra sẵn sàng rồi thử lại.",true);return false;}
+    try{
+      if(clearFirst) api.newConstruction();
+      const lines=cmd.split(/\n/).map(s=>s.trim()).filter(Boolean);
+      const results=[];
+      for(const line of lines){
+        let ok=false, errorText="";
+        try { ok=api.evalCommand(line) !== false; } catch(e) { errorText=e.message||String(e); }
+        results.push({line,ok,errorText});
+      }
+      const failed=results.filter(x=>!x.ok);
+      // Wait for GeoGebra to update its 3D camera after all objects have been created.
+      window.setTimeout(()=>{
+        try { if(api && typeof api.showAllObjects === "function") api.showAllObjects(); } catch(e) {}
+        try { if(api && typeof api.setSize === "function") api.setSize($("ggb-wrap").clientWidth,$("ggb-wrap").clientHeight); } catch(e) {}
+      },180);
+      if(failed.length){
+        const detail=failed.map(x=>x.line+(x.errorText?" ("+x.errorText+")":"")).join(" · ");
+        showNotice("GeoGebra không chấp nhận "+failed.length+"/"+results.length+" lệnh: "+detail+". Hãy kiểm tra trạng thái 3D và kết nối GeoGebra.",true);
+        return false;
+      }
+      showNotice("Đã gửi thành công "+results.length+" lệnh dựng hình. Nếu chưa thấy hình, dùng ‘Hiện tất cả đối tượng’ trong menu GeoGebra.");
+      if(currentMode === "2d") { try{ api.setPerspective("G"); }catch(e){} }
+      return true;
+    }catch(e){showNotice("Không thể dựng hình: "+(e.message||String(e)),true);return false;}
+  }
+  const quickToolCommands = {
+    point: "A=(0,0)",
+    segment: "A=(-3,0)\nB=(3,1)\nSegment(A,B)",
+    line: "A=(-3,-1)\nB=(3,2)\nLine(A,B)",
+    ray: "A=(-3,0)\nB=(3,1)\nRay(A,B)",
+    triangle: "A=(0,0)\nB=(5,0)\nC=(2,3)\nPolygon(A,B,C)",
+    isosceles: "A=(-3,0)\nB=(3,0)\nC=(0,4)\nPolygon(A,B,C)",
+    equilateral: "A=(0,0)\nB=(4,0)\nC=Rotate(B,60°,A)\nPolygon(A,B,C)",
+    righttriangle: "A=(0,0)\nB=(4,0)\nC=(0,3)\nPolygon(A,B,C)",
+    square: "A=(-2,-2)\nB=(2,-2)\nC=(2,2)\nD=(-2,2)\nPolygon(A,B,C,D)",
+    rectangle: "A=(-3,-1.5)\nB=(3,-1.5)\nC=(3,1.5)\nD=(-3,1.5)\nPolygon(A,B,C,D)",
+    circle: "O=(0,0)\nA=(3,0)\nCircle(O,A)",
+    pentagon: "A=(0,2)\nB=(1.902,0.618)\nC=(1.176,-1.618)\nD=(-1.176,-1.618)\nE=(-1.902,0.618)\nPolygon(A,B,C,D,E)",
+    hexagon: "A=(0,2)\nB=(1.732,1)\nC=(1.732,-1)\nD=(0,-2)\nE=(-1.732,-1)\nF=(-1.732,1)\nPolygon(A,B,C,D,E,F)",
+    cube: "A=(0,0,0)\nB=(3,0,0)\nCube(A,B)",
+    box: "A=(0,0,0)\nB=(4,0,0)\nC=(4,2,0)\nD=(0,2,0)\nE=(0,0,3)\nPrism(Polygon(A,B,C,D),E)",
+    prism: "A=(0,0,0)\nB=(3,0,0)\nC=(1,2,0)\nD=(0,0,3)\nPrism(Polygon(A,B,C),D)",
+    pyramid: "A=(-2,-2,0)\nB=(2,-2,0)\nC=(2,2,0)\nD=(-2,2,0)\nS=(0,0,4)\nPyramid(Polygon(A,B,C,D),S)",
+    tetrahedron: "A=(0,0,0)\nB=(3,0,0)\nC=(1,2,0)\nD=(1,1,3)\nPyramid(Polygon(A,B,C),D)",
+    cylinder: "Cylinder((0,0,0),(0,0,4),2)",
+    cone: "Cone((0,0,0),(0,0,4),2)",
+    sphere: "Sphere((0,0,0),2)"
+  };
+  function updateQuickToolOptions(mode){
+    const select=$("quickToolSelect");
+    const is3d=mode==="3d";
+    Array.from(select.options).forEach(opt=>{
+      const isShape3d=["cube","box","prism","pyramid","tetrahedron","cylinder","cone","sphere"].includes(opt.value);
+      const is2dOnly=["point","segment","line","ray","triangle","isosceles","equilateral","righttriangle","square","rectangle","circle","pentagon","hexagon"].includes(opt.value);
+      opt.hidden=is3d?!isShape3d:!is2dOnly;
+    });
+    const first=Array.from(select.options).find(opt=>!opt.hidden);
+    if(first) select.value=first.value;
+    $("workMode2d").classList.toggle("active",!is3d);
+    $("workMode3d").classList.toggle("active",is3d);
+  }
+  function createQuickTool(){
+    const key=$("quickToolSelect").value;
+    const cmd=quickToolCommands[key];
+    if(!cmd){showNotice("Vui lòng chọn một hình trong danh sách.",true);return;}
+    runCommands(cmd,true);
+  }
+  function loadMode(mode){
+    if(currentMode===mode && loaded)return;
+    currentMode=mode; loaded=false; api=null;
+    const generation=++appletGeneration;
+    updateQuickToolOptions(mode);
+    $("mode2d").classList.toggle("active",mode==="2d");$("mode3d").classList.toggle("active",mode==="3d");
+    $("workspaceTitle").textContent=mode==="2d"?"Bàn dựng hình 2D":"Bàn dựng hình 3D";
+    $("workspaceSubtitle").textContent=mode==="2d"?"Kéo các điểm để thay đổi hình":"Kéo để xoay mô hình · cuộn hoặc chụm để thu phóng";
+    $("exportHint").textContent=mode==="2d"?"Xuất PNG và SVG từ vùng hình học.":"Xuất PNG khả dụng; SVG không được API hỗ trợ cho vùng 3D.";
+    $("loading").classList.remove("hidden");
+    // Recreate the host element on every mode change. This prevents a stale 2D applet
+    // or delayed callback from leaving the 3D viewport blank.
+    const oldHost=$("ggb-element");
+    const host=document.createElement("div");host.id="ggb-element";host.style.width="100%";host.style.height="100%";
+    oldHost.replaceWith(host);
+    setReady(false,mode==="3d"?"Đang khởi tạo không gian 3D…":"Đang tải bộ dựng hình 2D…");
+    if(typeof GGBApplet==="undefined"){
+      $("loading").classList.add("hidden");setReady(false,"Không tải được GeoGebra");
+      showNotice("Không tải được thư viện GeoGebra. Kiểm tra kết nối Internet rồi tải lại trang.",true);return;
+    }
+    let readyTimer=window.setTimeout(()=>{
+      if(generation!==appletGeneration || loaded)return;
+      $("loading").classList.add("hidden");setReady(false,"GeoGebra tải quá lâu");
+      showNotice("GeoGebra "+(mode==="3d"?"3D":"2D")+" chưa phản hồi. Hãy kiểm tra Internet, tắt trình chặn nội dung hoặc tải lại trang.",true);
+    },30000);
+    const params={
+      id:"ggbApplet_"+generation,appName:mode==="2d"?"geometry":"3d",width:1000,height:700,
+      showToolBar:true,showMenuBar:true,showAlgebraInput:true,showResetIcon:true,
+      enableLabelDrags:true,enableShiftDragZoom:true,enableRightClick:true,
+      showToolBarHelp:true,showFullscreenButton:true,language:"vi",borderColor:null,
+      appletOnLoad:function(ggbApi){
+        if(generation!==appletGeneration || mode!==currentMode)return;
+        window.clearTimeout(readyTimer);
+        api=ggbApi;loaded=true;$("loading").classList.add("hidden");
+        setReady(true,mode==="3d"?"GeoGebra 3D đã sẵn sàng":"GeoGebra 2D đã sẵn sàng");
+        try { if(mode==="2d") api.setGridVisible(1,gridVisible); } catch(e) {}
+        if(mode==="3d"){
+          // Runtime smoke test: draw a visible cube immediately so the 3D view is
+          // verified in the user's browser before they choose another solid.
+          try {
+            api.newConstruction();
+            const a=api.evalCommand("A=(0,0,0)");
+            const b=api.evalCommand("B=(3,0,0)");
+            const cube=api.evalCommand("Cube(A,B)");
+            if(a===false || b===false || cube===false){
+              showNotice("Không tạo được khối kiểm tra 3D. GeoGebra đã tải nhưng từ chối lệnh Cube(A,B); hãy chụp ảnh lỗi để chẩn đoán.",true);
+            } else {
+              window.setTimeout(()=>{try{if(generation===appletGeneration&&api&&api.showAllObjects)api.showAllObjects();}catch(e){}},250);
+              showNotice("Không gian 3D đã tải và dựng thử hình lập phương thành công. Chọn mẫu khác để thay thế khối thử.");
+            }
+          } catch(e){showNotice("Không gian 3D đã mở nhưng kiểm tra dựng hình thất bại: "+(e.message||String(e)),true);}
+        } else {
+          showNotice("GeoGebra 2D đã sẵn sàng. Chọn hình mẫu hoặc sử dụng công cụ GeoGebra.");
+        }
+        window.setTimeout(()=>{try{if(generation===appletGeneration&&api&&api.setSize)api.setSize($("ggb-wrap").clientWidth,$("ggb-wrap").clientHeight);}catch(e){}},220);
+      }
+    };
+    try{const applet=new GGBApplet(params,true);applet.inject("ggb-element");}
+    catch(e){window.clearTimeout(readyTimer);$("loading").classList.add("hidden");setReady(false,"Lỗi khởi tạo");showNotice("Không thể khởi tạo GeoGebra: "+(e.message||String(e)),true);}
+  }
+  function downloadDataUrl(dataUrl, filename){
+    const a=document.createElement("a");a.href=dataUrl;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  }
+  function exportPNG(){
+    if(!api){showNotice("GeoGebra chưa sẵn sàng.",true);return;}
+    try{
+      const base64=api.getPNGBase64(2,false,144);
+      if(!base64){showNotice("GeoGebra chưa tạo được ảnh. Hãy thử lại.",true);return;}
+      downloadDataUrl("data:image/png;base64,"+base64,"GeoTHCS-hinh-ve.png");
+      showNotice("Đã tạo yêu cầu xuất hình PNG.");
+    }catch(e){showNotice("Xuất PNG không thành công: "+e.message,true);}
+  }
+  function exportSVG(){
+    if(!api){showNotice("GeoGebra chưa sẵn sàng.",true);return;}
+    if(currentMode==="3d"){showNotice("API GeoGebra không xuất SVG cho vùng hình 3D. Hãy dùng Xuất PNG hoặc mở menu xuất của GeoGebra.",true);return;}
+    try{
+      api.exportSVG(function(svg){
+        if(!svg){showNotice("Không nhận được dữ liệu SVG. Thử xuất từ menu GeoGebra.",true);return;}
+        const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"}),url=URL.createObjectURL(blob);
+        const a=document.createElement("a");a.href=url;a.download="GeoTHCS-hinh-ve.svg";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+        showNotice("Đã tạo yêu cầu xuất hình SVG.");
+      });
+    }catch(e){showNotice("Xuất SVG không thành công: "+e.message,true);}
+  }
+  function saveGgb(){
+    if(!api){showNotice("GeoGebra chưa sẵn sàng.",true);return;}
+    try{api.getBase64(base64=>{
+      if(!base64){showNotice("Không lấy được tệp GeoGebra.",true);return;}
+      downloadDataUrl("data:application/vnd.geogebra.file;base64,"+base64,"GeoTHCS-ban-ve.ggb");
+      showNotice("Đã tạo tệp bản vẽ .ggb để mở lại bằng GeoGebra.");
+    });}catch(e){showNotice("Lưu tệp không thành công: "+e.message,true);}
+  }
+  const layoutEl=document.querySelector(".layout");
+  const toggleLibraryBtn=$("toggleLibraryBtn");
+  toggleLibraryBtn.addEventListener("click",()=>{
+    const hidden=layoutEl.classList.toggle("library-hidden");
+    toggleLibraryBtn.textContent=hidden?"▸ Mở thư viện":"◂ Thu gọn thư viện";
+    toggleLibraryBtn.setAttribute("aria-expanded",String(!hidden));
+    // GeoGebra needs a short resize opportunity when the drawing board changes width.
+    window.setTimeout(()=>{try{if(api&&api.setSize)api.setSize($("ggb-wrap").clientWidth,$("ggb-wrap").clientHeight);}catch(e){}},180);
+  });
+  $("mode2d").addEventListener("click",()=>loadMode("2d"));
+  $("mode3d").addEventListener("click",()=>loadMode("3d"));
+  $("workMode2d").addEventListener("click",()=>loadMode("2d"));
+  $("workMode3d").addEventListener("click",()=>loadMode("3d"));
+  $("createQuickTool").addEventListener("click",createQuickTool);
+  $("category").addEventListener("change",renderQuick);
+  $("grade").addEventListener("change",()=>{
+    const grade=$("grade").value;
+    if(grade==="9") $("category").value=currentMode==="2d"?"Đường tròn":"Hình khối 3D";
+    else if(grade==="6") $("category").value=currentMode==="2d"?"Điểm và đường":"Hình khối 3D";
+    else if(grade==="7") $("category").value=currentMode==="2d"?"Tam giác":"Hình khối 3D";
+    else $("category").value=currentMode==="2d"?"Tứ giác":"Hình khối 3D";
+    renderQuick();
+  });
+  $("runCommand").addEventListener("click",()=>runCommands($("command").value,false));
+  $("command").addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter")runCommands($("command").value,false);});
+  $("newBtn").addEventListener("click",()=>{if(api&&confirm("Tạo bản vẽ mới? Các đối tượng hiện tại sẽ bị xóa.")){api.newConstruction();showNotice("Đã tạo bản vẽ mới.");}});
+  $("saveBtn").addEventListener("click",saveGgb);
+  $("pngBtn").addEventListener("click",exportPNG);$("svgBtn").addEventListener("click",exportSVG);
+  $("undoBtn").addEventListener("click",()=>{if(api)api.undo();});
+  $("redoBtn").addEventListener("click",()=>{if(api)api.redo();});
+  $("gridBtn").addEventListener("click",()=>{gridVisible=!gridVisible;if(api){try{api.setGridVisible(currentMode==="2d"?1:3,gridVisible);}catch(e){api.setGridVisible(gridVisible);}}showNotice("Đã "+(gridVisible?"bật":"tắt")+" lưới tọa độ.");});
+  $("labelsBtn").addEventListener("click",()=>{labelsVisible=!labelsVisible;if(api){try{api.setLabelVisible("A",labelsVisible);}catch(e){} showNotice("Đã đổi trạng thái nhãn cho đối tượng A nếu đối tượng này tồn tại. Có thể chỉnh nhãn từng đối tượng trong GeoGebra.");}});
+  $("fullscreenBtn").addEventListener("click",async()=>{
+    const el=document.querySelector(".workpanel");
+    try{if(!document.fullscreenElement)await el.requestFullscreen();else await document.exitFullscreen();}
+    catch(e){showNotice("Trình duyệt không cho phép chế độ toàn màn hình tại thời điểm này.",true);}
+  });
+  document.addEventListener("fullscreenchange",()=>{
+    const active=!!document.fullscreenElement;
+    $("fullscreenBtn").textContent=active?"⤢ Thoát toàn màn hình":"⛶ Toàn màn hình";
+    window.setTimeout(()=>{try{if(api&&api.setSize)api.setSize($("ggb-wrap").clientWidth,$("ggb-wrap").clientHeight);}catch(e){}},250);
+  });
+  // PWA: cài ứng dụng từ trình duyệt hỗ trợ; vẫn cần Internet để tải GeoGebra.
+  let installPrompt = null;
+  const installBtn = $("installBtn");
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault(); installPrompt = event; installBtn.hidden = false;
+  });
+  installBtn.addEventListener("click", async () => {
+    if (!installPrompt) {
+      showNotice("Nếu nút cài đặt chưa xuất hiện, hãy mở menu trình duyệt và chọn Cài đặt trang / Install app.");
+      return;
+    }
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null; installBtn.hidden = true;
+  });
+  window.addEventListener("appinstalled", () => {
+    installBtn.hidden = true; showNotice("GeoTHCS đã được cài đặt trên thiết bị.");
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+  }
+  renderCategories();loadMode("2d");
+})();
+</script>
+</body>
+</html>
